@@ -5,10 +5,9 @@ package plugins.stef.micromanager.block.lang;
 
 import java.util.List;
 
-import plugins.adufour.ezplug.EzVar;
-import plugins.adufour.ezplug.EzVarText;
-import plugins.adufour.vars.gui.VarEditor;
+import plugins.adufour.vars.gui.model.ValueSelectionModel;
 import plugins.adufour.vars.lang.Var;
+import plugins.adufour.vars.lang.VarString;
 import plugins.adufour.vars.util.VarListener;
 import plugins.tprovoost.Microscopy.MicroManager.MicroManager;
 
@@ -17,17 +16,17 @@ import plugins.tprovoost.Microscopy.MicroManager.MicroManager;
  * 
  * @author Stephane
  */
-public class EzVarMMPreset extends EzVarText
+public class VarMMPreset extends VarString
 {
-    public EzVarMMPreset(String name, EzVarMMGroup groupVar)
+    public VarMMPreset(String name, VarMMGroup groupVar)
     {
-        super(name, new String[] {""}, 0, Boolean.FALSE);
+        super(name, "");
 
         // set values
-        refreshPresets(groupVar);
+        refreshPresets(groupVar.getValue());
 
         // listen group var change
-        groupVar.getVariable().addListener(new VarListener<String>()
+        groupVar.addListener(new VarListener<String>()
         {
             @Override
             public void valueChanged(Var<String> source, String oldValue, String newValue)
@@ -44,7 +43,7 @@ public class EzVarMMPreset extends EzVarText
         });
     }
 
-    public EzVarMMPreset(EzVarMMGroup groupVar)
+    public VarMMPreset(VarMMGroup groupVar)
     {
         this("Preset", groupVar);
     }
@@ -53,12 +52,8 @@ public class EzVarMMPreset extends EzVarText
     {
         final List<String> presets = MicroManager.getConfigs(group);
 
-        setDefaultValues(presets.toArray(new String[0]), 0, false);
-        VarEditor<String> comp = getVarEditor();
-    }
-
-    public void refreshPresets(EzVar<String> groupVar)
-    {
-        refreshPresets(groupVar.getValue());
+        if (presets.size() > 0)
+            setDefaultEditorModel(new ValueSelectionModel<String>(presets.toArray(new String[presets.size()]),
+                    presets.get(0), false));
     }
 }

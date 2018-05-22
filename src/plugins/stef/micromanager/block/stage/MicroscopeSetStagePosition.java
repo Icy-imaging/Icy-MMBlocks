@@ -1,14 +1,12 @@
 package plugins.stef.micromanager.block.stage;
 
-import icy.system.thread.ThreadUtil;
-import mmcorej.CMMCore;
-
 import org.micromanager.api.MultiStagePosition;
 
+import icy.system.thread.ThreadUtil;
+import mmcorej.CMMCore;
 import plugins.adufour.blocks.util.VarList;
 import plugins.adufour.vars.lang.Var;
 import plugins.adufour.vars.lang.VarBoolean;
-import plugins.adufour.vars.lang.VarObject;
 import plugins.adufour.vars.util.VarException;
 import plugins.stef.micromanager.block.AbstractMicroscopeBlock;
 import plugins.stef.micromanager.block.setting.MicroscopePositions;
